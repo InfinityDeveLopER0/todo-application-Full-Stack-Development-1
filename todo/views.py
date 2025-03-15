@@ -61,5 +61,5 @@ def delete_todo(request,srno):
 
 def signout(request):
     logout(request)
-    request redirect('/login')
+    return redirect('/login')
 
