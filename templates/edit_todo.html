@@ -15,23 +15,21 @@
             <div class="heading">
                 Get things Done
             </div>
-            <div>
-                <a href="{% url 'signout' %}"></a>
-            </div>
             <form method="post">
                 {% csrf_token %}
-                <input type="text" name="title" required placeholder="Add Today's Task">
-                <input type="Submit" value="Add Task">
+                <input type="text" name="title" required placeholder="Add Today's Task" value="{{obj.title}}">
+
+                <input type="Submit" value="Update Task">
             </form>
             {%for todo in res%}
             <div class="todo">
                 <h1>{{todo.srno}}</h1>
                 <p>{{todo.title}}</p>
                 <div>
-                    <a href="/edit_todo/{{todo.srno}}">
+                    <a href="">
                         <h6>Edit</h6>
                     </a>
-                    <a href="/delete_todo/{{todo.srno}}">
+                    <a href="">
                         <h6>Delete</h6>
                     </a>
                 </div>

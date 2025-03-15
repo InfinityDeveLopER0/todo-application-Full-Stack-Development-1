@@ -30,3 +30,36 @@ def loginn(request):
 
     
      return render(request, 'login.html')
+
+def todo(request):
+    if request.method== 'POST':
+        title= request.POST.get('title')
+        obj = models.TODOO(title=title, user=request.user)
+        obj.save()
+        user=request.user
+        res = models.TODOO.objects.filter(user=request.user).order_by('-date')
+        return redirect('/todopage', {'res':res})
+    res = models.TODOO.objects.filter(user=request.user).order_by('-date')
+    return render(request, 'todo.html',{'res':res})
+        
+def edit_todo(request,srno):
+    if request.method== 'POST':
+        title= request.POST.get('title')
+        obj = models.TODOO.objects.get(srno=srno)
+        obj.title=title
+        obj.save()
+        user=request.user
+        return redirect('/todopage', {'obj':obj})
+    
+    obj = models.TODOO.objects.get(srno=srno)
+    return render(request, 'edit_todo.html')
+
+def delete_todo(request,srno):
+    obj = models.TODOO.objects.get(srno=srno)
+    obj.delete()
+    return redirect('/todopage')
+
+def signout(request):
+    logout(request)
+    request redirect('/login')
+
